@@ -22,3 +22,11 @@ def drawSlots(WINDOW, slots):
     for slot in slots:
         slot = pygame.Rect(slot[0][0], slot[0][1], slot[2][0] - slot[0][0], 200)
         pygame.draw.rect(WINDOW, colors.PEG, slot)
+
+
+def drawRectangle(WINDOW, color, bounds):
+    rect = pygame.Rect(bounds[0][0], bounds[0][1], bounds[2][0] - bounds[0][0], bounds[2][1] - bounds[0][1])
+    pygame.draw.rect(WINDOW, color, rect)
+
+def drawPoly(WINDOW, color, coords):
+    pygame.draw.polygon(WINDOW, color, coords)

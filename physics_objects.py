@@ -1,16 +1,30 @@
 import pymunk
 
 
-def createFunnel(space, WINDOW_WIDTH, funnelWidth, funnelHeight, yPos):
-    leftBody = pymunk.Body(None, None, pymunk.Body.STATIC)
-    leftBody.position = 0, yPos # shape coordinates originate from here
-    leftShape = pymunk.Segment(leftBody, (0, 0), (funnelWidth, funnelHeight), 0) # body coordinates + whatever
-    rightBody = pymunk.Body(None, None, pymunk.Body.STATIC)
-    rightBody.position = WINDOW_WIDTH - funnelWidth, yPos
-    rightShape = pymunk.Segment(rightBody, (0, funnelHeight), (funnelWidth, 0), 0)
+def createBorders(space, WINDOW_WIDTH, WINDOW_HEIGHT, wallWidth):
+    topCoords = [(0, 0), (WINDOW_WIDTH, 0), (WINDOW_WIDTH, wallWidth), (0, wallWidth)]
+    botCoords = [(0, WINDOW_HEIGHT - wallWidth), (WINDOW_WIDTH, WINDOW_HEIGHT - wallWidth), (WINDOW_WIDTH, WINDOW_HEIGHT), (0, WINDOW_HEIGHT)]
+    leftCoords = [(0, 0), (wallWidth, 0), (wallWidth, WINDOW_HEIGHT), (0, WINDOW_HEIGHT)]
+    rightCoords = [(WINDOW_WIDTH - wallWidth, 0), (WINDOW_WIDTH, 0), (WINDOW_WIDTH, WINDOW_HEIGHT), (WINDOW_WIDTH - wallWidth, WINDOW_HEIGHT)]
+    top = pymunk.Poly(space.static_body, topCoords)
+    bot = pymunk.Poly(space.static_body, botCoords)
+    left = pymunk.Poly(space.static_body, leftCoords)
+    right = pymunk.Poly(space.static_body, rightCoords)
+    space.add(top, bot, left, right)
+    return [topCoords, botCoords, leftCoords, rightCoords]
 
-    space.add(leftBody, leftShape, rightBody, rightShape)
-    return [leftShape, rightShape]
+
+def createFunnel(space, WINDOW_WIDTH, beadRadius):
+    xMid = WINDOW_WIDTH / 2
+    yStart = 50
+    yEnd = 300
+    leftPolyCoords = [(0, yEnd), (xMid - beadRadius, yEnd), (xMid - beadRadius, yEnd - beadRadius), (0, yStart)]
+    leftPoly = pymunk.Poly(space.static_body, leftPolyCoords)
+
+    rightPolyCoords = [(WINDOW_WIDTH, yEnd), (xMid + beadRadius, yEnd), (xMid + beadRadius, yEnd - beadRadius), (WINDOW_WIDTH, yStart)]
+    rightPoly = pymunk.Poly(space.static_body, rightPolyCoords)
+    space.add(leftPoly, rightPoly)
+    return [leftPolyCoords, rightPolyCoords]
 
 
 def createBead(space, pos, rad):
@@ -20,21 +34,6 @@ def createBead(space, pos, rad):
     shape.elasticity = 0
     space.add(body, shape)
     return shape
-
-
-def createBorders(space, WINDOW_WIDTH, WINDOW_HEIGHT, wallWidth):
-    floor = pymunk.Body(0, 0, pymunk.Body.STATIC)
-    floor.position = 0, WINDOW_HEIGHT - wallWidth 
-    floorShape = pymunk.Segment(floor, (0, 0), (WINDOW_WIDTH, 0), 0)
-    leftWall = pymunk.Body(0, 0, pymunk.Body.STATIC)
-    leftWall.position = 0, 0 
-    leftWallShape = pymunk.Segment(leftWall, (wallWidth, 0), (wallWidth, WINDOW_HEIGHT), 0)
-    rightWall = pymunk.Body(0, 0, pymunk.Body.STATIC)
-    rightWall.position = WINDOW_WIDTH - wallWidth, 0 
-    rightWallShape = pymunk.Segment(rightWall, (0, 0), (0, WINDOW_HEIGHT), 0)
-
-    space.add(floor, floorShape, leftWall, leftWallShape, rightWall, rightWallShape)
-    return [floorShape, leftWallShape, rightWallShape]
 
 
 def createSlots(space, width, height, pegs):
