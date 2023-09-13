@@ -1,4 +1,9 @@
 import pymunk
+import random
+
+
+BEAD_COLLISION_TYPE = 1
+PEG_COLLISION_TYPE = 2
 
 
 def createBorders(space, WINDOW_WIDTH, WINDOW_HEIGHT, wallWidth):
@@ -28,10 +33,10 @@ def createFunnel(space, WINDOW_WIDTH, beadRadius):
 
 
 def createBead(space, pos, rad):
-    body = pymunk.Body(1, 30, pymunk.Body.DYNAMIC)
+    body = pymunk.Body(10, 30, pymunk.Body.DYNAMIC)
     body.position = pos
     shape = pymunk.Circle(body, rad)
-    shape.elasticity = 0
+    shape.collision_type = BEAD_COLLISION_TYPE
     space.add(body, shape)
     return shape
 
@@ -71,6 +76,7 @@ def createPegs(space, rows, startHeight, WINDOW_WIDTH, pegRadius):
             middlePeg = pymunk.Body(0, 0, pymunk.Body.STATIC)
             middlePeg.position = xMid, startHeight + row * rowMargin
             middlePegShape = pymunk.Circle(middlePeg, pegRadius)
+            middlePegShape.collision_type = PEG_COLLISION_TYPE
             space.add(middlePeg, middlePegShape)
             pegs.append(middlePegShape)
         else:
@@ -80,12 +86,26 @@ def createPegs(space, rows, startHeight, WINDOW_WIDTH, pegRadius):
             pegLeft = pymunk.Body(0, 0, pymunk.Body.STATIC)
             pegLeft.position = xMid + offSet + i * rowMargin, startHeight + row * rowMargin
             pegLeftShape = pymunk.Circle(pegLeft, pegRadius)
+            pegLeftShape.collision_type = PEG_COLLISION_TYPE
             pegRight = pymunk.Body(0, 0, pymunk.Body.STATIC)
             pegRight.position = xMid - offSet - i * rowMargin, startHeight + row * rowMargin
             pegRightShape = pymunk.Circle(pegRight, pegRadius)
+            pegRightShape.collision_type = PEG_COLLISION_TYPE
             pegs += [pegLeftShape, pegRightShape]
             pegCenters += [pegRight.position, pegLeft.position]
             space.add(pegLeft, pegLeftShape, pegRight, pegRightShape)
 
     return pegs, pegCenters
 
+
+def pegBounceCallback(arbiter, space, data):
+    bead_shape, peg_shape = arbiter.shapes
+    # Randomly decide the direction of the bounce
+    if random.random() < 0.5:
+        # Bounce to the left
+        impulse = (-0.1, 0.0)
+    else:
+        # Bounce to the right
+         impulse = (0.1, 0.0)
+    bead_shape.body.apply_impulse_at_local_point(impulse)
+    return True
