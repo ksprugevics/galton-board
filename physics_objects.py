@@ -37,20 +37,7 @@ def createBorders(space, WINDOW_WIDTH, WINDOW_HEIGHT, wallWidth):
     return [floorShape, leftWallShape, rightWallShape]
 
 
-def createSlots(space, WINDOW_WIDTH, WINDOW_HEIGHT, width, height, count):
-    slots = []
-    p0 = (WINDOW_WIDTH / 2 - width / 2, WINDOW_HEIGHT - height)
-    p1 = (WINDOW_WIDTH / 2 + width / 2, WINDOW_HEIGHT - height)
-    p2 = (WINDOW_WIDTH / 2 + width / 2, WINDOW_HEIGHT)
-    p3 = (WINDOW_WIDTH / 2 - width / 2, WINDOW_HEIGHT)
-    rect = [p0, p1, p2, p3]
-    slots.append(rect)
-    slot = pymunk.Poly(space.static_body, rect)
-    space.add(slot)
-    return slots
-
-
-def createSlotsNew(space, width, height, pegs):
+def createSlots(space, width, height, pegs):
     slots = []
     for peg in pegs:
         p0 = (peg.x - width / 2, peg.y + 100 - height)
@@ -78,7 +65,7 @@ def createPegs(space, rows, startHeight, WINDOW_WIDTH, pegRadius):
     for row in range(rows):
         pegCenters = []
         pegCountInRow = row + 1
-        pegCountInEachSide = -(-pegCountInRow // 2)
+        pegCountOnEachSide = -(-pegCountInRow // 2)
         offSet = 0
 
         if pegCountInRow % 2 != 0:
@@ -90,7 +77,7 @@ def createPegs(space, rows, startHeight, WINDOW_WIDTH, pegRadius):
         else:
             offSet = rowMargin / 2
 
-        for i in range(0, pegCountInEachSide):
+        for i in range(0, pegCountOnEachSide):
             pegLeft = pymunk.Body(0, 0, pymunk.Body.STATIC)
             pegLeft.position = xMid + offSet + i * rowMargin, startHeight + row * rowMargin
             pegLeftShape = pymunk.Circle(pegLeft, pegRadius)
