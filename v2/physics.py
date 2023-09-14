@@ -40,7 +40,7 @@ def createBorders():
 
 def createBead():
     body = pymunk.Body(10, 30, pymunk.Body.DYNAMIC)
-    body.position = WIDTH / 2, 10
+    body.position = WIDTH / 2, -10
     shape = pymunk.Circle(body, BEAD_RADIUS)
 
     shape.elasticity = 0

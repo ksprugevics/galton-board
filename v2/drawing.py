@@ -8,10 +8,10 @@ WIDTH = 600
 
 FUNNEL_HEIGHT = 100
 
-BEAD_RADIUS = 5
-PEG_RADIUS = 5
-PEG_HEIGHT_MARGIN = 20
-PEG_ROWS = 20
+BEAD_RADIUS = 8
+PEG_RADIUS = 8
+PEG_HEIGHT_MARGIN = BEAD_RADIUS * 4
+PEG_ROWS = 13
 
 
 POLYGONS = []
@@ -33,6 +33,6 @@ def drawCircles(color, circleShapes):
 
 def drawFrame():
     WINDOW.fill(colors.BACKGROUND)
-    drawCircles(colors.WALL, PEGS)
-    drawCircles(colors.BEAD, BEADS)
+    drawCircles(colors.BEAD, PEGS)
+    drawCircles(colors.PEG, BEADS)
     drawPolygons()
