@@ -20,8 +20,8 @@ def drawBorders(WINDOW, walls, thickness):
 
 def drawSlots(WINDOW, slots):
     for slot in slots:
-        slot = pygame.Rect(slot[0][0], slot[0][1], slot[2][0] - slot[0][0], 200)
-        pygame.draw.rect(WINDOW, colors.PEG, slot)
+        slot = pygame.Rect(slot[0][0], slot[0][1], slot[2][0] - slot[0][0], 500)
+        pygame.draw.rect(WINDOW, colors.SLOT, slot)
 
 
 def drawRectangle(WINDOW, color, bounds):
