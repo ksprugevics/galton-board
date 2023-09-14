@@ -15,6 +15,11 @@ drawing.POLYGONS.extend(borders)
 bead = physics.createBead()
 drawing.BEADS.append(bead)
 
+pegs, wings, slots = physics.createPegs()
+drawing.PEGS.extend(pegs)
+drawing.POLYGONS.extend(wings)
+drawing.POLYGONS.extend(slots)
+
 
 pygame.init()
 while True:
