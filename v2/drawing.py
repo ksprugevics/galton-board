@@ -33,6 +33,6 @@ def drawCircles(color, circleShapes):
 
 def drawFrame():
     WINDOW.fill(colors.BACKGROUND)
-    drawCircles(colors.BEAD, PEGS)
-    drawCircles(colors.PEG, BEADS)
+    drawCircles(colors.PEG, PEGS)
+    drawCircles(colors.BEAD, BEADS)
     drawPolygons()

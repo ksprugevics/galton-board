@@ -7,9 +7,10 @@ import physics
 
 
 SIMULATION_SPEED = 1 / 5
-BEAD_SPAWN_RATE = 1000 # ms
-MAX_BEAD_COUNT = 100
+BEAD_SPAWN_RATE = 300
+MAX_BEAD_COUNT = 110
 
+pygame.display.set_caption("Galton board")
 
 borders = physics.createBorders()
 drawing.POLYGONS.extend(borders)

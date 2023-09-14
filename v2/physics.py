@@ -127,8 +127,8 @@ def createSlots(pegs, leftMostPeg, rightMostPeg):
         (rightMostPeg.position.x + slotWidth * 1.5, rightMostPeg.position.y + HEIGHT)
     ]
 
-    slots.append((leftMostSlotCoords, colors.WALL))
-    slots.append((rightMostSlotCoords, colors.WALL))
+    slots.append((leftMostSlotCoords, colors.SLOT))
+    slots.append((rightMostSlotCoords, colors.SLOT))
     leftMostSlot = pymunk.Poly(SPACE.static_body, leftMostSlotCoords)
     rightMostSlot = pymunk.Poly(SPACE.static_body, rightMostSlotCoords)
     SPACE.add(leftMostSlot, rightMostSlot)
@@ -140,7 +140,7 @@ def createSlots(pegs, leftMostPeg, rightMostPeg):
             (peg.x + slotWidth / 2, peg.y + 1000),
             (peg.x - slotWidth / 2, peg.y + 1000)
         ]
-        slots.append((slotCoords, colors.WALL))
+        slots.append((slotCoords, colors.SLOT))
         slot = pymunk.Poly(SPACE.static_body, slotCoords)
         SPACE.add(slot)
     
