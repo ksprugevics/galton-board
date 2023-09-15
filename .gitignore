@@ -2,3 +2,6 @@
 __pycache__/
 v1/__pycache__/
 v2/__pycache__/
+v2/build/
+v2/dist/
+v2/simulation.spec
